@@ -17,6 +17,10 @@ public class ApiClientUtil {
         return handleResult(resultType, response);
     }
 
+    public static Result<JSONObject> get(String url) throws IOException {
+        CloseableHttpResponse response = ApiClient.get(url);
+        return handleResult(JSONObject.class, response);
+    }
 
     public static <V, T> Result<V> post(String url, Class<V> resultType, T requestData) throws IOException {
         Request<T> request = new Request<>();
@@ -25,12 +29,14 @@ public class ApiClientUtil {
         return handleResult(resultType, response);
     }
 
-    public static <T> Result<JSONObject> post(String url, T requestData) throws IOException {
-        return post(url, JSONObject.class, requestData);
+    public static Result<JSONObject> post(String url, Request<JSONObject> request) throws IOException {
+        CloseableHttpResponse response = ApiClient.post(url, request);
+        return handleResult(JSONObject.class, response);
     }
 
-    public static <T> Result<JSONArray> postForList(String url, T requestData) throws IOException {
-        return post(url, JSONArray.class, requestData);
+    public static Result<JSONArray> postForList(String url, Request<JSONObject> request) throws IOException {
+        CloseableHttpResponse response = ApiClient.post(url, request);
+        return handleResult(JSONArray.class, response);
     }
 
     private static <V> Result<V> handleResult(Class<V> clazz, CloseableHttpResponse response) throws
