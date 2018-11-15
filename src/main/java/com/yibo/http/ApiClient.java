@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.HttpHeaders;
@@ -36,8 +37,9 @@ public class ApiClient {
             return null;
         }
         HttpPost post = new HttpPost(url);
-        post.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
-        post.setEntity(new StringEntity(JSON.toJSONString(content)));
+        post.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        post.addHeader(HttpHeaders.CACHE_CONTROL,"no-cache");
+        post.setEntity(new StringEntity(JSON.toJSONString(content), ContentType.APPLICATION_JSON));
         return HttpClients.createDefault().execute(post);
     }
 

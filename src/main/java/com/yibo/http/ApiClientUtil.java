@@ -1,6 +1,7 @@
 package com.yibo.http;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yibo.http.domain.common.Request;
 import com.yibo.http.domain.common.Result;
@@ -24,7 +25,16 @@ public class ApiClientUtil {
         return handleResult(resultType, response);
     }
 
-    private static <V> Result<V> handleResult(Class<V> clazz, CloseableHttpResponse response) throws IOException {
+    public static <T> Result<JSONObject> post(String url, T requestData) throws IOException {
+        return post(url, JSONObject.class, requestData);
+    }
+
+    public static <T> Result<JSONArray> postForList(String url, T requestData) throws IOException {
+        return post(url, JSONArray.class, requestData);
+    }
+
+    private static <V> Result<V> handleResult(Class<V> clazz, CloseableHttpResponse response) throws
+            IOException {
         int code = response.getStatusLine().getStatusCode();
         if (code != HttpStatus.OK.value()) {
             return Result.ofFailedStatus(code, "请求失败");

@@ -18,6 +18,18 @@ public class Request<T> implements Serializable {
 
     private T reqData;
 
+    public Request() {
+    }
+
+    public Request(T reqData) {
+        this.reqData = reqData;
+    }
+
+    public Request(String token, T reqData) {
+        this.token = token;
+        this.reqData = reqData;
+    }
+
     public String getToken() {
         return token;
     }

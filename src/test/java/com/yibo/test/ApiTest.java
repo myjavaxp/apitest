@@ -15,8 +15,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 public class ApiTest {
-    private static final int CLIENT_TOTAL = 500;
-    private static final int THREAD_TOTAL = 50;
+    private static final int CLIENT_TOTAL = 100;
+    private static final int THREAD_TOTAL = 10;
 
     @Test
     public void test01() throws IOException {
@@ -48,8 +48,8 @@ public class ApiTest {
         }
         threadPool.shutdown();
     }
-
-    private void testPost() throws IOException {
+    @Test
+    public void testPost() throws IOException {
         Result<Contracts> result = ApiClientUtil.post(
                 HttpHost.VELP_HOST + "/contract/query",
                 Contracts.class,
