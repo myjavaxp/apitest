@@ -43,7 +43,9 @@ public class WmsApiTest {
 
     @Test
     public void test02() throws IOException {
-        String token = "zouyaadmin_11_1_1_2820ceb52e984660bd9897d02bd390f6";
+        if (token == null) {
+            token = "zouyaadmin_11_1_1_2820ceb52e984660bd9897d02bd390f6";
+        }
         JSONObject reqData = new JSONObject();
         reqData.put("whseId", "1044");
         reqData.put("pageNum", "1");
