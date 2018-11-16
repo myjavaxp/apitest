@@ -91,7 +91,7 @@ public class ExcelUtil {
         Workbook wb = WorkbookFactory.create(inputStream);
         inputStream.close();
 
-        Sheet resultSheet = wb.createSheet(sheetName + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+        Sheet resultSheet = wb.createSheet(sheetName + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
         assert reqData != null;
         for (int i = 0; i <= reqData.size(); i++) {
             Row row = resultSheet.createRow(i);
