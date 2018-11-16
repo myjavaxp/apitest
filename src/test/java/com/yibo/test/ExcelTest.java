@@ -8,9 +8,11 @@ import com.yibo.http.constant.CommonConstants;
 import com.yibo.http.constant.HttpHost;
 import com.yibo.http.domain.common.Request;
 import com.yibo.http.domain.common.Result;
+import com.yibo.http.function.ReadStrategy;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelTest extends WmsApiTest {
@@ -33,6 +35,28 @@ public class ExcelTest extends WmsApiTest {
 
     @Test
     public void auto() throws IOException {
-        ExcelUtil.autoTest("/Users/yibo/Downloads/abc.xlsx", null, token, HttpHost.WMS_TEST_HOST + "/wms/biz/warehouseswitch/query");
+        ExcelUtil.autoTest("/Users/yibo/Downloads/abc.xlsx",
+                null,
+                token,
+                HttpHost.WMS_TEST_HOST + "/wms/biz/warehouseswitch/query");
+    }
+
+    @Test
+    public void testStrategy() throws IOException {
+        ReadStrategy<JSONObject> strategy = list -> {
+            List<JSONObject> result = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                if (i % 2 == 0) {
+                    result.add(list.get(i));
+                }
+            }
+            return result;
+        };
+        ExcelUtil.autoTest(
+                "/Users/yibo/Downloads/abc.xlsx",
+                null,
+                token,
+                HttpHost.WMS_TEST_HOST + "/wms/biz/warehouseswitch/query",
+                strategy);
     }
 }

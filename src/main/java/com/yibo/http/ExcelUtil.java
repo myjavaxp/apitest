@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yibo.http.constant.CommonConstants;
 import com.yibo.http.domain.common.Request;
 import com.yibo.http.domain.common.Result;
+import com.yibo.http.function.ReadStrategy;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.util.StringUtils;
 
@@ -64,10 +65,27 @@ public class ExcelUtil {
      * @throws IOException IO异常
      */
     public static void autoTest(String filePath, String sheetName, String token, String fullUrl) throws IOException {
+        autoTest(filePath, sheetName, token, fullUrl, null);
+    }
+
+    /**
+     * 仅适用于post接口
+     *
+     * @param filePath  测试数据完整路径名
+     * @param sheetName excel的sheet名字
+     * @param token     token
+     * @param fullUrl   完整请求路径
+     * @param strategy  读取数据的策略
+     * @throws IOException IO异常
+     */
+    public static void autoTest(String filePath, String sheetName, String token, String fullUrl, ReadStrategy<JSONObject> strategy) throws IOException {
         if (!StringUtils.hasText(sheetName)) {
             sheetName = "Sheet1";
         }
         List<JSONObject> reqData = getReqData(filePath, sheetName);
+        if (strategy != null) {
+            reqData = strategy.convert(reqData);
+        }
         File file = new File(filePath);
         InputStream inputStream = new FileInputStream(file);
         Workbook wb = WorkbookFactory.create(inputStream);
