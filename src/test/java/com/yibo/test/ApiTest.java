@@ -1,7 +1,8 @@
 package com.yibo.test;
 
+import com.alibaba.fastjson.JSON;
 import com.yibo.http.ApiClientUtil;
-import com.yibo.http.HttpHost;
+import com.yibo.http.constant.HttpHost;
 import com.yibo.http.domain.common.Result;
 import com.yibo.http.domain.request.ContractQuery;
 import com.yibo.http.domain.response.Contracts;
@@ -14,6 +15,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+import static com.yibo.http.constant.CommonConstants.FEATURES;
+
 public class ApiTest {
     private static final int CLIENT_TOTAL = 100;
     private static final int THREAD_TOTAL = 10;
@@ -21,7 +24,7 @@ public class ApiTest {
     @Test
     public void test01() throws IOException {
         Result<Driver> result = ApiClientUtil.get(HttpHost.VELP_HOST + "/driver/findByUserId/11", Driver.class);
-        System.out.println(result);
+        System.out.println(JSON.toJSONString(result, FEATURES));
     }
 
     @Test
@@ -48,12 +51,13 @@ public class ApiTest {
         }
         threadPool.shutdown();
     }
+
     @Test
     public void testPost() throws IOException {
         Result<Contracts> result = ApiClientUtil.post(
                 HttpHost.VELP_HOST + "/contract/query",
                 Contracts.class,
                 new ContractQuery(null, 1, 100));
-        System.out.println(result);
+        System.out.println(JSON.toJSONString(result, FEATURES));
     }
 }
