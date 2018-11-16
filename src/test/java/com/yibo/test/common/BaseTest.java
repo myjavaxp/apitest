@@ -17,12 +17,9 @@ public class BaseTest {
         JSONObject reqData = new JSONObject();
         reqData.put("operName", "zouyaadmin");
         reqData.put("operPassword", "111111");
-        Request<JSONObject> request = new Request<>(reqData);
-        request.setReqData(reqData);
-
         Result<JSONObject> result = ApiClientUtil.post(
                 HttpHost.WMS_TEST_HOST + "/wms/auth/user/noauth/login",
-                request);
+                new Request<>(reqData));
         JSONObject repData = result.getRepData();
         if (repData != null) {
             token = repData.getString("token");
