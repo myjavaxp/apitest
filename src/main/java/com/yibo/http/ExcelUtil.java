@@ -100,7 +100,7 @@ public class ExcelUtil {
         resultSheet.setColumnWidth(0, 15 * 2 * 256);
         resultSheet.setColumnWidth(1, 5 * 2 * 256);
         resultSheet.setColumnWidth(2, 10 * 2 * 256);
-        resultSheet.setColumnWidth(3, 20 * 2 * 256);
+        resultSheet.setColumnWidth(3, 50 * 2 * 256);
         OutputStream outputStream = new FileOutputStream(file);
         wb.write(outputStream);
         outputStream.close();
